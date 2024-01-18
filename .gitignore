@@ -160,4 +160,5 @@ cython_debug/
 #.idea/
 
 # Testing stuff
-.trash/
+/trash
+/coverage
