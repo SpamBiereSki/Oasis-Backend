@@ -1,4 +1,10 @@
-from django.http import HttpResponse
+from .models import Post
+from rest_framework import viewsets
+from .serializers import PostSerializer
 
-def index(request):
-    return HttpResponse("Hello World")
+
+class PostViewSet(viewsets.ModelViewSet):
+    queryset = Post.objects.all().order_by("pub_date")
+    serializer_class = PostSerializer
+
+    
