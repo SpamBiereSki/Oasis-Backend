@@ -3,20 +3,24 @@ from django.utils.timezone import now
 
 class Post(models.Model):
     title = models.CharField(max_length=1000)
-    post_content = models.CharField(max_length=2000)
-    pub_date = models.DateTimeField(default=now, editable=False)
+    content = models.CharField(max_length=2000)
+    created = models.DateTimeField(default=now, editable=False)
 
     def __str__(self) -> str:
         return self.title
     
     class Meta:
-        ordering = ['pub_date']
+        ordering = ['created']
 
 
 class Comment(models.Model):
-    comment_content = models.CharField(max_length=1000)
-    related_post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    pub_date = models.DateTimeField(default=now, editable=False)
+    content = models.CharField(max_length=1000)
+    idpost = models.ForeignKey(Post, on_delete=models.CASCADE)
+    created = models.DateTimeField(default=now, editable=False)
+    replyto = models.ForeignKey("self", default=None, blank=True, null=True, on_delete=models.CASCADE)
     
     def __str__(self) -> str:
-        return self.comment_content
+        return self.content
+
+    class Meta:
+        ordering = ["created"]
